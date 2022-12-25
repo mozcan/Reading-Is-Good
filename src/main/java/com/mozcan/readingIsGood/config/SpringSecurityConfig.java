@@ -23,8 +23,15 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/v1/books").hasAnyRole("ADMIN")
-                        .requestMatchers("/api/v1/customers").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/book/create").hasAnyRole("ADMIN")
+                        .requestMatchers("/book/update").hasAnyRole("ADMIN")
+                        .requestMatchers("/book/{*}").hasAnyRole("ADMIN","USER")
+                        .requestMatchers("/customer").hasAnyRole(  "ADMIN")
+                        .requestMatchers("/order/create").hasAnyRole("USER","ADMIN")
+                        .requestMatchers("/order/{*}").hasAnyRole("ADMIN")
+                        .requestMatchers("/statics").hasAnyRole(  "ADMIN")
+                        .requestMatchers("/h2-ui").permitAll()
+                        .requestMatchers("/swagger-ui/index.html").permitAll()
                         .anyRequest().permitAll()
                 )
                 .httpBasic()

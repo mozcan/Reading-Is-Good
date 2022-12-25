@@ -29,7 +29,7 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> createBook(@RequestBody @Valid BookCreateRequest bookCreateRequest) {
 
@@ -55,7 +55,7 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> updateBook(@RequestBody @Valid BookUpdateRequest updateRequest) {
         try {
