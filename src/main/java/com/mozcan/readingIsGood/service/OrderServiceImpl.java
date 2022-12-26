@@ -1,11 +1,11 @@
 package com.mozcan.readingIsGood.service;
 
 import com.mozcan.readingIsGood.controller.dto.OrderCreateRequest;
+import com.mozcan.readingIsGood.controller.dto.StaticsCustomerMontlyOrderResponse;
 import com.mozcan.readingIsGood.dao.OrderJpaRepository;
 import com.mozcan.readingIsGood.exception.BookNotFoundException;
 import com.mozcan.readingIsGood.exception.CustomerNotFoundException;
 import com.mozcan.readingIsGood.exception.OrderNotFoundException;
-import com.mozcan.readingIsGood.model.entity.CustomerEntity;
 import com.mozcan.readingIsGood.model.entity.OrderEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -63,10 +64,8 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public OrderEntity getCustomerMontlyOrder(Long customerId) {
-        var customerEntity = customerService.getCustomer(customerId);
-
+    public List<StaticsCustomerMontlyOrderResponse> getCustomerMontlyOrder(Long customerId) {
         var statics = orderJpaRepository.getCustomerMontlyOrder(customerId);
-        return null;
+        return statics;
     }
 }

@@ -23,11 +23,11 @@ public class StatisticsController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/customer/{id}")
+    @GetMapping("/customer/{customerId}")
     public ResponseEntity<?> getCustomerMontlyOrder(@PathVariable Long customerId) {
         try {
             var order = orderService.getCustomerMontlyOrder(customerId);
-            return null;
+            return new ResponseEntity<>(order, HttpStatus.OK);
         } catch (CustomerNotFoundException ex) {
             logger.error(ex.getMessage());
 
