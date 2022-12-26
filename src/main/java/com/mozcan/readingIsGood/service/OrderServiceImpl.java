@@ -64,6 +64,8 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public OrderEntity getCustomerMontlyOrder(Long customerId) {
+        var customerEntity = customerService.getCustomer(customerId);
+
         var statics = orderJpaRepository.getCustomerMontlyOrder(customerId);
         return null;
     }
