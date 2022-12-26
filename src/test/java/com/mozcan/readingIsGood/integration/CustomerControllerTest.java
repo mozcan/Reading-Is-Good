@@ -3,18 +3,21 @@ package com.mozcan.readingIsGood.integration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mozcan.readingIsGood.controller.CustomerController;
 import com.mozcan.readingIsGood.controller.dto.CustomerCreateRequest;
-import com.mozcan.readingIsGood.service.CustomerService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.http.RequestEntity.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CustomerController.class)
@@ -26,19 +29,23 @@ public class CustomerControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private CustomerService customerService;
+   @InjectMocks
+   private CustomerController customerController;
+
+   @BeforeEach
+   void setUp() {
+       MockitoAnnotations.openMocks(this);
+       this.mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+   }
 
     @Test
-    void whenValidInput_thenReturns200() throws Exception {
+    void customer_create_then_return_201_test() throws Exception {
         var createRequest = new CustomerCreateRequest("Mustafa ÖZCAN","wustafa.ozcan@gmail.com","12345");
 
-/*
-        mockMvc.perform(post("/customer")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createRequest)))
-                .andExpect(status().isOk());
+        RequestBuilder request = MockMvcRequestBuilders.post("/customer").content(objectMapper.writeValueAsString(createRequest));
+        MvcResult result = this.mockMvc.perform(request).andReturn();
 
- */
+        assertEquals("{\"customerId\":1,\"name\":\"Mustafa OZCAN\",\"email\":\"wustafa.ozcan2@gmail.com\"}",result.getResponse().getContentAsString());
+
     }
 }
