@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     @Transactional
     public CustomerEntity create(CustomerCreateRequest createRequest) {
-        if(customerJpaRepository.isUserExist(createRequest.getEmail()))
+        if(isUserExist(createRequest.getEmail()))
             throw new CustomerExistException("User has already been added");
 
         var customerEntity = new CustomerEntity();
@@ -44,5 +44,11 @@ public class CustomerServiceImpl implements CustomerService{
             return customerEntity.get();
 
         throw new CustomerNotFoundException("Customer could not found");
+    }
+
+    @Override
+    public Boolean isUserExist(String email) {
+        var isExist = customerJpaRepository.isUserExist(email);
+        return isExist;
     }
 }

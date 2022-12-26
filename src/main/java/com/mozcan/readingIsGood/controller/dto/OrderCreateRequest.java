@@ -10,6 +10,14 @@ public class OrderCreateRequest {
     @NotNull
     private List<Long> bookIds;
 
+    public OrderCreateRequest() {
+    }
+
+    public OrderCreateRequest(Long customerId, List<Long> bookIds) {
+        this.customerId = customerId;
+        this.bookIds = bookIds;
+    }
+
     public Long getCustomerId() {
         return customerId;
     }

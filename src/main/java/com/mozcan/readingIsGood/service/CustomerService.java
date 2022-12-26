@@ -7,4 +7,6 @@ public interface CustomerService {
 
     CustomerEntity create(CustomerCreateRequest customerCreateRequest);
     CustomerEntity getCustomer(Long id);
+
+    Boolean isUserExist(String email);
 }

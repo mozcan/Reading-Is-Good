@@ -23,6 +23,17 @@ public class BookCreateRequest {
     @Positive
     private Integer stock;
 
+    public BookCreateRequest() {
+    }
+
+    public BookCreateRequest(String name, String author, String publisher, Double price, Integer stock) {
+        this.name = name;
+        this.author = author;
+        this.publisher = publisher;
+        this.price = price;
+        this.stock = stock;
+    }
+
     public String getName() {
         return name;
     }
